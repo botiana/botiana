@@ -1,0 +1,18 @@
+words:
+  test:
+    type: 'noun'
+    pronunciation: 'test'
+    definition: 
+      1: 'a procedure, reaction, or reagent used to identify or characterize a substance or constituent'
+    usage: 
+      1: 'I will test the plan.'
+    synonyms: 
+      1: 'test' 
+  flu:
+    type: 'noun'
+    pronunciation: "flu"
+    definition:
+      1: 'any of several virus diseases marked especially by respiratory or intestinal symptoms'
+    symptoms:
+      1: 'fever'
+      2: 'headache'
