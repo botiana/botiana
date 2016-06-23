@@ -10,7 +10,7 @@ import time
 
 import requests
 import yaml
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, FeatureNotFound
 from slackclient import SlackClient
 from translate import Translator
 
@@ -94,10 +94,13 @@ def define(message):
             evt["user"], message, sa_def)
         __send_response(resp, icon_tux)
     else:
+        payload = {'term': message}
         r = requests.get(
-            "http://www.urbandictionary.com/define.php?term={}".format(
-                message))
-        soup = BeautifulSoup(r.content, "lxml")
+            "http://www.urbandictionary.com/define.php", params=payload)
+        try:
+            soup = BeautifulSoup(r.content, "lxml")
+        except FeatureNotFound:
+            soup = BeautifulSoup(r.content, "html.parser")
         ud_def = soup.find("div", attrs={"class": "meaning"}).text
         resp = '<@{}> Urban Dictionary defines `{}` as ```{}```'.format(
             evt["user"], message, ud_def)
