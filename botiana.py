@@ -29,13 +29,21 @@ def yaml_loader(filepath):
     return data
 
 
-def __send_response(text, icon_url='ru'):
-    sc.api_call('chat.postMessage',
-                username=BOT_NAME,
-                icon_url=icon_url,
-                as_user='false',
-                channel=evt["channel"],
-                text=text)
+def __send_response(text, icon_url='ru', emoji='null'):
+    if "emoji" in icon_url:
+      sc.api_call('chat.postMessage',
+                  username=BOT_NAME,
+                  icon_emoji=emoji,
+                  as_user='false',
+                  channel=evt["channel"],
+                  text=text)
+    else:
+      sc.api_call('chat.postMessage',
+                  username=BOT_NAME,
+                  icon_url=icon_url,
+                  as_user='false',
+                  channel=evt["channel"],
+                  text=text)
 
 
 # Magic 8 Ball function
@@ -116,7 +124,7 @@ def __trans(flag, lang, message):
         else:
             translator = Translator(to_lang=lang)
             l = translator.translate(message)
-            __send_response(l, flag)
+            __send_response(l, "emoji", flag)
     except ValueError:
         resp = 'Vhy try to anger {} <@{}>?'.format(BOT_NAME, evt["user"])
         __send_response(resp, flag)
