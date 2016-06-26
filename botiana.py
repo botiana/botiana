@@ -120,14 +120,14 @@ def __trans(flag, lang, message):
     try:
         if len(message) > MAX_TRANSLATE_LENGTH:
             resp = "Don't be a dick <@{}>".format(evt["user"])
-            __send_response(resp, flag)
+            __send_response(resp, icon_ru)
         else:
             translator = Translator(to_lang=lang)
             l = translator.translate(message)
             __send_response(l, "emoji", flag)
     except ValueError:
         resp = 'Vhy try to anger {} <@{}>?'.format(BOT_NAME, evt["user"])
-        __send_response(resp, flag)
+        __send_response(resp, icon_ru)
 
 
 def magyar(message):
@@ -144,17 +144,17 @@ def unitr(command, message):
 
 
 def angry(message=u"Что ебать ты от меня хочешь? Я не понимаю!"):
-    __send_response(message)
+    __send_response(message,"emoji",":angry:")
 
 
 def help(message):
-    resp = 'In Soviet Russia <@{}> helps <@>.'.format(evt["user"], evt["user"])
-    __send_response(resp)
+    resp = 'In Soviet Russia <@{}> helps <@{}>.'.format(evt["user"], evt["user"])
+    __send_response(resp, icon_ru)
 
 
 def HELP(message):
     resp = 'VHY YOU YELL AT ME <@{}>!'.format(evt["user"])
-    __send_response(resp)
+    __send_response(resp, "emoji", ":crying_cat_face:")
 
 
 def leave(message):
@@ -172,7 +172,14 @@ try:
             for evt in sc.rtm_read():
                 if "type" in evt and evt["type"] == "message" and "text" in evt:
                     message = evt["text"].encode('utf8', 'replace').strip()
-                    print(message)
+                    #print(evt)
+                    if "channel" in evt and evt["type"] == "message" and evt["channel"].startswith("D"):
+                      #here is a hook for dealing with direct messages; upcoming feature
+                      if message.startswith("<#C"):
+                        channel,message = message.split(None, 1)
+                        channel=channel[2:-1]
+                        evt["channel"]=channel
+                        print(message)
                     if message.startswith(bot_mention):
                         try:
                             # have a botname, command, and message?
