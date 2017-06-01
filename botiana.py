@@ -8,12 +8,15 @@ import random
 import sys
 import time
 import os
+import re
 
 import requests
 import yaml
 from bs4 import BeautifulSoup, FeatureNotFound
 from slackclient import SlackClient
 from translate import Translator
+
+from yahoo_finance import Share
 
 # load config
 try:
@@ -61,6 +64,15 @@ def eight_ball():
     ]
     __send_response(random.choice(answers), icon_poolball)
 
+def stock_price(symbol):
+  ticker = Share(symbol)
+  quote = ticker.get_price()
+  if quote is None:
+    message = str(symbol) + " is not a valid ticker symbol"
+  else:
+    change = ticker.get_change()
+    message = symbol + ": " + quote + " " + change
+  __send_response(message, icon_money)
 
 # Sysadmin Dictionary function
 def __sa_dictionary(message):
@@ -96,7 +108,7 @@ def __sa_dictionary(message):
 
 # define function
 def define(message):
-    # print("in define function: "+word)
+    #print("in define function: "+message)
     if message in yamldata["words"]:
         sa_def = __sa_dictionary(str(message))
         resp = '<@{}> The Sys Admin dictionary defines `{}` as \n>>>{}'.format(
@@ -109,8 +121,8 @@ def define(message):
         try:
             soup = BeautifulSoup(r.content, "lxml")
         except FeatureNotFound:
-            soup = BeautifulSoup(r.content, "html.parser")
-        ud_def = soup.find("div", attrs={"class": "meaning"}).text
+            soup = BeautifulSoup(r.content, "html.parser", from_encoding='utf-8')
+        ud_def = soup.find("div", attrs={"class": "meaning"}).text.encode('utf8', 'replace').strip()
         resp = '<@{}> Urban Dictionary defines `{}` as ```{}```'.format(
             evt["user"], message, ud_def)
         __send_response(resp, icon_urban_dictionary)
@@ -123,9 +135,26 @@ def __trans(flag, lang, message):
             resp = "Don't be a dick <@{}>".format(evt["user"])
             __send_response(resp, icon_ru)
         else:
-            translator = Translator(to_lang=lang)
-            l = translator.translate(message)
-            __send_response(l, "emoji", flag)
+          if len(lang) > 2 and lang.find('|')!=-1:
+              from_lang = lang.split("|")[0]
+              to_lang = lang.split("|")[1]
+              if len(from_lang) > 2 or len(to_lang) > 2:
+                  print("this is going to fail")
+                  __send_response("Я не понимаю тебя нахальный ублюдок", "emoji", ":flag-ru:")
+              else:
+                  translator = Translator(to_lang=to_lang, from_lang=from_lang)
+                  if from_lang == "en":
+                      flag = ":flag-us:"
+                  else:
+                      flag = ":flag-" + from_lang + ":"
+                  l = translator.translate(message)
+                  __send_response(l, "emoji", flag)
+          elif len(lang) > 2:
+              __send_response("Я не понимаю тебя нахальный ублюдок", "emoji", ":flag-ru:")
+          else:
+              translator = Translator(to_lang=lang)
+              l = translator.translate(message)
+              __send_response(l, "emoji", flag)
     except ValueError:
         resp = 'Vhy try to anger {} <@{}>?'.format(BOT_NAME, evt["user"])
         __send_response(resp, icon_ru)
@@ -140,7 +169,7 @@ def russian(message):
 
 
 def unitr(command, message):
-    _, lang = command.split(":")
+    _, lang = command.split("tr:")
     __trans(":flag-{}:".format(lang), lang, message)
 
 
@@ -201,6 +230,10 @@ try:
                             unitr(command, message)
                         elif command == "8ball":
                             eight_ball()
+                        elif command == "stock":
+                            stock_price(message)
+                        elif command == "magic":
+                            __send_response("http://www.reactiongifs.com/r/mgc.gif", icon_magic)
                         else:
                             try:
                                 # http://stackoverflow.com/a/16683842/436190
