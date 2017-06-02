@@ -3,3 +3,4 @@ bs4
 slackclient
 translate
 requests
+yahoo_finance
