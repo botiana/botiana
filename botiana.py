@@ -107,7 +107,7 @@ def __sa_dictionary(message):
 
 
 # define function
-def define(message):
+def define(message, alternate_definition_index=0):
     #print("in define function: "+message)
     if message in yamldata["words"]:
         sa_def = __sa_dictionary(str(message))
@@ -122,9 +122,15 @@ def define(message):
             soup = BeautifulSoup(r.content, "lxml")
         except FeatureNotFound:
             soup = BeautifulSoup(r.content, "html.parser", from_encoding='utf-8')
-        ud_def = soup.find("div", attrs={"class": "meaning"}).text.encode('utf8', 'replace').strip()
-        resp = '<@{}> Urban Dictionary defines `{}` as ```{}```'.format(
-            evt["user"], message, ud_def)
+        definitions = soup.findAll("div", attrs={"class": "meaning"})
+        try:
+            ud_def = definitions[alternate_definition_index].text.encode(
+                'utf8', 'replace').strip()
+            resp = u'<@{}> Urban Dictionary defines `{}` as ```{}```'.format(
+                evt["user"], message, ud_def)
+        except IndexError:
+            resp = u'<@{}> Urban Dictionary doesn\'t have `{}` definitions for `{}`...'.format(
+                evt["user"], alternate_definition_index + 1, message)
         __send_response(resp, icon_urban_dictionary)
 
 
@@ -234,6 +240,17 @@ try:
                             stock_price(message)
                         elif command == "magic":
                             __send_response("http://www.reactiongifs.com/r/mgc.gif", icon_magic)
+                        elif command == "define":
+                            parsed_message = message.split('alt:', 1)
+                            alternate_definition = 0
+                            if len(parsed_message) > 1:
+                                try:
+                                    alternate_definition = abs(
+                                        int(parsed_message[1]))
+                                except ValueError:
+                                    pass
+                            define(parsed_message[0].strip(),
+                                   alternate_definition)
                         else:
                             try:
                                 # http://stackoverflow.com/a/16683842/436190
