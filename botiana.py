@@ -107,7 +107,7 @@ def __sa_dictionary(message):
 
 
 # define function
-def define(message, alternate_definition_index=0, ud_results_per_page=6):
+def define(message, alternate_definition_index=0, ud_results_per_page=7):
     #print("in define function: "+message)
     if message in yamldata["words"]:
         sa_def = __sa_dictionary(str(message))
@@ -117,8 +117,9 @@ def define(message, alternate_definition_index=0, ud_results_per_page=6):
     else:
         payload = {'term': message}
         definition_index = alternate_definition_index
-        if alternate_definition_index > ud_results_per_page:
-            payload['page'] = alternate_definition_index // ud_results_per_page
+        if alternate_definition_index >= ud_results_per_page:
+            payload['page'] = (alternate_definition_index
+                               // ud_results_per_page) + 1
             definition_index %= ud_results_per_page
         r = requests.get(
             "http://www.urbandictionary.com/define.php", params=payload)
