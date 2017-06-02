@@ -126,10 +126,10 @@ def define(message, alternate_definition_index=0):
         try:
             ud_def = definitions[alternate_definition_index].text.encode(
                 'utf8', 'replace').strip()
-            resp = u'<@{}> Urban Dictionary defines `{}` as ```{}```'.format(
+            resp = '<@{}> Urban Dictionary defines `{}` as ```{}```'.format(
                 evt["user"], message, ud_def)
         except IndexError:
-            resp = u'<@{}> Urban Dictionary doesn\'t have `{}` definitions for `{}`...'.format(
+            resp = '<@{}> Urban Dictionary doesn\'t have `{}` definitions for `{}`...'.format(
                 evt["user"], alternate_definition_index + 1, message)
         __send_response(resp, icon_urban_dictionary)
 
