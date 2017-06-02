@@ -210,16 +210,16 @@ try:
 
         while True:
             for evt in sc.rtm_read():
+                #print(evt)
                 if "type" in evt and evt["type"] == "message" and "text" in evt:
                     message = evt["text"].encode('utf8', 'replace').strip()
-                    #print(evt)
                     if "channel" in evt and evt["type"] == "message" and evt["channel"].startswith("D"):
                       #here is a hook for dealing with direct messages; upcoming feature
                       if message.startswith("<#C"):
-                        channel,message = message.split(None, 1)
-                        channel=channel[2:-1]
+                        garble_channel,message = message.split(None, 1)
+                        channel = str(re.findall('#(.*?)\|', garble_channel)[0])
                         evt["channel"]=channel
-                        print(message)
+                        message = "<@{}".format(sc.server.login_data["self"]["id"]) + "> " + message
                     if message.startswith(bot_mention):
                         try:
                             # have a botname, command, and message?
