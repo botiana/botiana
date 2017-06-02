@@ -107,7 +107,7 @@ def __sa_dictionary(message):
 
 
 # define function
-def define(message, alternate_definition_index=0):
+def define(message, alternate_definition_index=0, ud_results_per_page=6):
     #print("in define function: "+message)
     if message in yamldata["words"]:
         sa_def = __sa_dictionary(str(message))
@@ -116,6 +116,10 @@ def define(message, alternate_definition_index=0):
         __send_response(resp, icon_tux)
     else:
         payload = {'term': message}
+        definition_index = alternate_definition_index
+        if alternate_definition_index > ud_results_per_page:
+            payload['page'] = alternate_definition_index // ud_results_per_page
+            definition_index %= ud_results_per_page
         r = requests.get(
             "http://www.urbandictionary.com/define.php", params=payload)
         try:
@@ -124,7 +128,7 @@ def define(message, alternate_definition_index=0):
             soup = BeautifulSoup(r.content, "html.parser", from_encoding='utf-8')
         definitions = soup.findAll("div", attrs={"class": "meaning"})
         try:
-            ud_def = definitions[alternate_definition_index].text.encode(
+            ud_def = definitions[definition_index].text.encode(
                 'utf8', 'replace').strip()
             resp = '<@{}> Urban Dictionary defines `{}` as ```{}```'.format(
                 evt["user"], message, ud_def)
