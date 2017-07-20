@@ -49,6 +49,58 @@ def __send_response(text, icon_url='ru', emoji='null'):
                   channel=evt["channel"],
                   text=text)
 
+def roll(message):
+    from random import randint
+    operations = {
+     'coinflip': randint(1, 2),
+     'd2': randint(1, 2),
+     'd3': randint(1, 3),
+     'd4': randint(1, 4),
+     'd6': randint(1, 6),
+     'd8': randint(1, 8),
+     'd12': randint(1, 12),
+     'd20': randint(1, 20),
+     'd100': randint(1, 100),
+    }
+    __send_response(
+        operations.get(message.lower(), 'subcommand {} not found, commands are: {}'.format(message, str(sorted(operations.keys()))))
+    )
+
+def memelist():
+    r = requests.get(
+        "http://bradme.me/api/templates")
+    __send_response("\n".join(
+            sorted(["{}: {}".format(k, v.split('/')[-1]) for k,v in r.json().iteritems() if k and v])
+        )
+    )
+
+def meme(message):
+    if message.lower() == "list":
+        memelist()
+        return
+    r = r"(?P<template>\w+)?(\s+(?P<text>.+))?"
+    template, top_text, bottom_text = "kermit", "you should provide valid input", "but that's none of my business"
+    import re
+    m = re.match(r, message.lower())
+    if m:
+        print m.groups()
+        if m.group('template'):
+            template = m.group('template')
+        if m.group('text'):
+            top_text, bottom_text = str(m.group('text') + '|||').split('|', 2)[:2]
+    template, top_text, bottom_text = tuple(
+        s.strip().
+         replace("-", "--").
+         replace("_", "__").
+         replace(" ", "-").
+         replace("?", "~q").
+         replace("%", "~p").
+         replace("#", "~h").
+         replace("/", "~s").
+         replace('\xe2\x80\x99', "'").
+         replace("''", '"').
+         replace("'", '%27') for s in (template, top_text, bottom_text))
+    __send_response("https://bradme.me/{}/{}/{}.jpg".format(template, top_text, bottom_text))
 
 # Magic 8 Ball function
 def eight_ball():
@@ -241,6 +293,12 @@ try:
                             unitr(command, message)
                         elif command == "8ball":
                             eight_ball()
+                        elif command.lower() == "roll":
+                            roll(message)
+                        elif command.lower() == "meme":
+                            meme(message)
+                        elif command.lower() == "memelist":
+                            memelist()
                         elif command == "stock":
                             stock_price(message)
                         elif command == "magic":
