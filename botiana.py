@@ -9,14 +9,13 @@ import sys
 import time
 import os
 import re
-
 import requests
 import yaml
 from bs4 import BeautifulSoup, FeatureNotFound
 from slackclient import SlackClient
 from translate import Translator
-
 from yahoo_finance import Share
+import wikipedia
 
 # load config
 try:
@@ -100,7 +99,7 @@ def meme(message):
          replace('\xe2\x80\x99', "'").
          replace("''", '"').
          replace("'", '%27') for s in (template, top_text, bottom_text))
-    __send_response("https://bradme.me/{}/{}/{}.jpg".format(template, top_text, bottom_text))
+    __send_response("https://bradme.me/{}/{}/{}.jpg".format(template, top_text, bottom_text), icon_bcat)
 
 # Magic 8 Ball function
 def eight_ball():
@@ -190,6 +189,14 @@ def define(message, alternate_definition_index=0, ud_results_per_page=7):
                 evt["user"], alternate_definition_index + 1, message)
         __send_response(resp, icon_urban_dictionary)
 
+def wiki(message):
+    try:
+        summary = wikipedia.summary(message)
+        __send_response("```" + summary + "```", icon_wiki)
+    except wikipedia.exceptions.PageError:
+        __send_response(message + " is not a valid article. Try again", icon_wiki)
+    except wikipedia.exceptions.DisambiguationError as e:
+        __send_response(str(e), icon_wiki)
 
 # Universal Translator
 def __trans(flag, lang, message):
@@ -241,9 +248,8 @@ def angry(message=u"Что ебать ты от меня хочешь? Я не �
 
 
 def help(message):
-    resp = 'In Soviet Russia <@{}> helps <@{}>.'.format(evt["user"], evt["user"])
+    resp = "commands <@botiana> will respond to:\n define <string>\n    ask botiana to look up something in the urban dictionary, or the old SA dictionary\n<tr\:from_lang|to_lang> <string> \n    ask botiana to translate something\n8ball <string>  \n    ask the magic 8 ball a question\nstock <ticker symbol>\n    get the current stock price from yahoo for <ticker symbol>\nmagic\n    send the magic gif\n wiki <string>\n    ask botiana to return a summary from wikipedia"
     __send_response(resp, icon_ru)
-
 
 def HELP(message):
     resp = 'VHY YOU YELL AT ME <@{}>!'.format(evt["user"])
@@ -301,6 +307,8 @@ try:
                             memelist()
                         elif command == "stock":
                             stock_price(message)
+                        elif command == "wiki":
+                            wiki(message)
                         elif command == "magic":
                             __send_response("http://www.reactiongifs.com/r/mgc.gif", icon_magic)
                         elif command == "define":
