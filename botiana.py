@@ -326,7 +326,12 @@ try:
                             try:
                                 # http://stackoverflow.com/a/16683842/436190
                                 args_dict = {'message': message}
-                                globals()[command](**args_dict)
+                                # stop the madness
+                                if command in cmnds:
+                                  globals()[command](**args_dict)
+                                else:
+                                  angry(
+                                      u"Соединительная связь, какая у вас функция")
                             except:
                                 angry(
                                     u"Вы датировать commandme? В Советской России бот команда, которую вы!")
