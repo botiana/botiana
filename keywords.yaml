@@ -1,0 +1,18 @@
+keywords:
+  'cats':
+    type: 'phrase'
+    watch: 'all' 
+    icon: 'http://path/to/your/cdn/picture'
+    phrases:
+      - 'mew'
+      - 'meow'
+      - 'rawr'
+  'turtles':
+    type: 'url'
+    icon: 'http://path/to/your/cdn/picture'
+    url: 'http://path/to/your/cdn/picture'
+    watch: 'all'
+  'belgium':
+    type: 'phrase'
+    phrases: 'why would you say that?'
+    watch: 'all'

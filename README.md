@@ -1,17 +1,17 @@
 # botiana
 
 ## Getting started
-I highly suggest running this in a virtual environment. But, make your own choice, this isn't Soviet Russia.
+I highly suggest running this in docker. But, make your own choice, this isn't Soviet Russia.
 
 ### Install requirements
 `pip install -r requirements.txt`
 
-### Settings
-Copy the settings file and customize it.
-```sh
-cp example_settings.py
-settings.py
-```
+### Configuration
+settings are in `settings.py`
+sysadmin dictonary definitions in `sa.yaml`
+keyword triggers are in `keywords.yaml`
+
+Consider using the environment for your setting.py. It makes it easier when running in kubernetes
 
 ## Execution
-`./botiana.py`
+`cd /path/to/botiana/repo && ./botiana.py`
