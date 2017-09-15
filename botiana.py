@@ -313,28 +313,30 @@ try:
                             except:
                                 angry()
                     if "channel" in evt and evt["type"] == "message":
-                        if message in hotkeys["keywords"]:
-                             if sword > rndword:
-                                 if hotkeys["keywords"][message]["watch"] != "all":
-                                     if hotkeys["keywords"][message]["watch"] == evt["channel"]:
-                                         if hotkeys["keywords"][message]["type"] == "phrase":
-                                             rndword = randint(1,7)
-                                             sword = 0
-                                             __send_response(random.choice(hotkeys["keywords"][message]["phrases"]), hotkeys["keywords"][message]["icon"])
-                                         if hotkeys["keywords"][message]["type"] == "url":
-                                             rndword = randint(1,7)
-                                             sword = 0
-                                             __send_response(hotkeys["keywords"][message]["url"], hotkeys["keywords"][message]["icon"])
-                                 else:
-                                     if hotkeys["keywords"][message]["type"] == "phrase":
-                                         rndword = randint(1,7)
-                                         sword = 0
-                                         __send_response(random.choice(hotkeys["keywords"][message]["phrases"]), hotkeys["keywords"][message]["icon"])
-                                     if hotkeys["keywords"][message]["type"] == "url":
-                                         rndword = randint(1,7)
-                                         sword = 0
-                                         __send_response(hotkeys["keywords"][message]["url"], hotkeys["keywords"][message]["icon"])
-                             sword = (sword + 1)  
+                        msgary = message.split(' ')
+                        for k in msgary:
+                            if k in hotkeys["keywords"]:
+                                if sword > rndword:
+                                    if hotkeys["keywords"][k]["watch"] != "all":
+                                        if hotkeys["keywords"][k]["watch"] == evt["channel"]:
+                                            if hotkeys["keywords"][k]["type"] in "phrase":
+                                                rndword = randint(1,7)
+                                                sword = 0
+                                                __send_response(random.choice(hotkeys["keywords"][k]["phrases"]), hotkeys["keywords"][k]["icon"])
+                                            if hotkeys["keywords"][k]["type"] == "url":
+                                                rndword = randint(1,7)
+                                                sword = 0
+                                                __send_response(hotkeys["keywords"][k]["url"], hotkeys["keywords"][k]["icon"])
+                                    else:
+                                        if hotkeys["keywords"][k]["type"] in "phrase":
+                                            rndword = randint(1,7)
+                                            sword = 0
+                                            __send_response(random.choice(hotkeys["keywords"][k]["phrases"]), hotkeys["keywords"][k]["icon"])
+                                        if hotkeys["keywords"][k]["type"] == "url":
+                                            rndword = randint(1,7)
+                                            sword = 0
+                                            __send_response(hotkeys["keywords"][k]["url"], hotkeys["keywords"][k]["icon"])
+                                sword = (sword + 1)
             time.sleep(.1)
     else:
         if sc.server.login_data is None:
