@@ -25,12 +25,6 @@ except ImportError:
     print ("Could not find settings.py or there was an error loading it.")
     sys.exit(1)
 
-# load yaml file(s) 
-def yaml_loader(filepath):
-    with open(filepath, "r") as file_descriptor:
-        data = yaml.load(file_descriptor)
-    return data
-
 def __send_response(text, icon_url='ru', emoji='null'):
     if "emoji" in icon_url:
       sc.api_call('chat.postMessage',
@@ -253,8 +247,8 @@ def help(message):
     __send_response(resp, icon_ru)
 
 # Main program, slack client.
-yamldata = yaml_loader("sa.yaml")
-hotkeys  = yaml_loader("keywords.yaml")
+yamldata = yaml.load(os.environ['sa_dict'].decode('base64'))
+hotkeys  = yaml.load(os.environ['keywords'].decode('base64'))
 sc = SlackClient(token)
 try:
     if sc.rtm_connect():
