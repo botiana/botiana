@@ -1,0 +1,13 @@
+remarks:
+  - "Is the system down?"
+  - "define the scope of the impact please"
+
+names:
+  - Vivian Dilday:
+     'https://link/to/your/cdn/picture'
+  - James Waymire:
+     'https://link/to/your/cdn/picture'
+
+annoy: 
+  - "<@{}>, It's been {} seconds since we have heard from you. Do you have an update?"
+  - "<@{}>, we need an update. It's been {} seconds."
