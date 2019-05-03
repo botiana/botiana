@@ -30,4 +30,4 @@ icon_502 = os.environ['icon_502']
 
 # Botiana Responses for conditions
 msg_angry = u"Соединительная связь, какая у вас функция"
-msg_noop = u"Я не готов выполнить эту задачу"
+msg_noop = u"Я не готова выполнить эту задачу"
