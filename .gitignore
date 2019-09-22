@@ -1,3 +1,9 @@
-/.idea/
-/botiana.iml
-*.pyc
+bootstrap.sh
+data/data.yaml
+settings.pyc
+__pycache__/
+venv
+.idea
+.idea/
+.idea/workspace.xml
+bootstrap
