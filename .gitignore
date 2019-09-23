@@ -1,5 +1,4 @@
 bootstrap.sh
-data/data.yaml
 settings.pyc
 __pycache__/
 venv
