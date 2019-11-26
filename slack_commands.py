@@ -3,13 +3,36 @@
 from common import logger
 from settings import *
 
+def __send_snippet(sc, text, channel, thread_ts="", initial_comment='', title='-'):
+    # Required slackclient, channel, thread_ts
+    # thread_ts if this is a thread response
+    logger('info', initial_comment)
+    res = None
+    try:
+        res = sc.api_call('files.upload',
+                          channels=channel,
+                          content=text,
+                          initial_comment=initial_comment,
+                          title=title,
+                          thread_ts=thread_ts)
+        logger('info', res)
+        if res['ok'] != "True":
+            logger("warn", "Error: __send_snippet API Error: %s" % res['error'])
 
-def __send_response(sc, text, channel, thread_ts="",  icon_url='ru', emoji='null'):
+    # KeyError is not going through logger, debug it
+    except KeyError as e:
+        logger("ignore", str(e) + " error in __send_snippet.")
+    except Exception as e:
+        logger("warn", "Unknown error in __send_snippet: " + str(e))
+
+
+def __send_message(sc, text, channel, thread_ts="", icon_url='ru', emoji='null'):
     # Required slackclient, channel, thread_ts
     # thread_ts if this is a thread response
     # icon_url to override default, set this to 'emoji' override with an emoji
     # emoji set this to a valid emoji and ensure icon_url='emoji'
     try:
+        res = None
         if "emoji" in icon_url:
             res = sc.api_call('chat.postMessage',
                               username=BOT_NAME,
@@ -18,9 +41,6 @@ def __send_response(sc, text, channel, thread_ts="",  icon_url='ru', emoji='null
                               channel=channel,
                               text=text,
                               thread_ts=thread_ts)
-            if res['ok'] != "True":
-                logger("warn", "Error: __send_response API Error: %s" % res['error'])
-            logger('info', res)
         else:
             res = sc.api_call('chat.postMessage',
                               username=BOT_NAME,
@@ -29,15 +49,15 @@ def __send_response(sc, text, channel, thread_ts="",  icon_url='ru', emoji='null
                               channel=channel,
                               text=text,
                               thread_ts=thread_ts)
-            if res['ok'] != "True":
-                logger("warn", "Error: __send_response API Error: %s" % res['error'])
-            logger('info', res)
+        if res['ok'] != "True":
+            logger("warn", "Error: __send_message API Error: %s" % res['error'])
+        logger('info', res)
 
     # KeyError is not going through logger, debug it
     except KeyError as e:
-        logger("ignore", str(e) + " error in __send_response.")
+        logger("ignore", str(e) + " error in __send_message.")
     except Exception as e:
-        logger("warn", "Unknown error in __send_response: " + str(e))
+        logger("warn", "Unknown error in __send_message: " + str(e))
 
 
 def __impersonator(sc, text, channel, userpic, username, thread_ts=""):
@@ -76,20 +96,18 @@ def __send_ephemeral(sc, text, channel, caller):
 
 def __set_topic(sc, new_topic, channel):
     try:
+        res = None
         if channel.startswith("G"):
             res = sc.api_call('groups.setTopic',
                               channel=channel,
                               topic=new_topic)
-            if res['ok'] != "True":
-                logger("warn", "Error: __send_topic API Error: %s" % res['error'])
-            logger('info', res)
         else:
             res = sc.api_call('channels.setTopic',
                               channel=channel,
                               topic=new_topic)
-            if res['ok'] != "True":
-                logger("warn", "Error: __send_topic API Error: %s" % res['error'])
-            logger('info', res)
+        if res['ok'] != "True":
+            logger("warn", "Error: __send_topic API Error: %s" % res['error'])
+        logger('info', res)
     except Exception as e:
         logger("warn", "Unknown error in __set_topic: %s" % e)
 
