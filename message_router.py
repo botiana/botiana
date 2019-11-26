@@ -53,9 +53,9 @@ def message_router(variables, botname, evt, command, message):
                 __trans(variables, messagedetails, flag="flag-" + request, lang=request)
             elif command.startswith("channel_join"):
                 __send_message(variables.sc, "Just like the Crimea! You can not keep me out, you capitalist pigs!",
-                                evt["channel"], "", icon_default)
+                               evt["channel"], "", icon_default)
             elif command.startswith("group_join"):
                 __send_message(variables.sc, "You are all parasites and loafers that stop others from working!",
-                                evt["channel"], "", icon_default)
+                               evt["channel"], "", icon_default)
             else:
                 logger('info', "I have been tasked with an invalid command.")
