@@ -10,7 +10,7 @@ from translate import Translator
 from pyowm import OWM
 from settings import *
 from common import logger, custom_icon
-from slack_commands import __send_message, __send_ephemeral, __impersonator, __user_id
+from slack_commands import __send_message, __send_ephemeral, __impersonator, __user_id, __send_snippet
 
 
 def eight_ball(variables, msgdict):
@@ -35,8 +35,9 @@ def eight_ball(variables, msgdict):
 def wiki(variables, msgdict):
     try:
         summary = wikipedia.summary(msgdict["message"])
-        __send_message(variables.sc, "```" + summary + "```", msgdict["channel"], msgdict["thread_ts"],
-                        custom_icon("icon_wiki"))
+        page = wikipedia.page(msgdict["message"])
+
+        __send_snippet(variables.sc, summary, msgdict["channel"], msgdict["thread_ts"], page.url, msgdict["message"])
     except wikipedia.exceptions.PageError:
         __send_message(variables.sc, msgdict["message"] + " is not a valid article. Try again", msgdict["channel"],
                         msgdict["thread_ts"], custom_icon("icon_wiki"))
