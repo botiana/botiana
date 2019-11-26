@@ -3,8 +3,30 @@
 from common import logger
 from settings import *
 
+def __send_snippet(sc, text, channel, thread_ts="", initial_comment='', title='-'):
+    # Required slackclient, channel, thread_ts
+    # thread_ts if this is a thread response
+    logger('info', initial_comment)
+    res = None
+    try:
+        res = sc.api_call('files.upload',
+                          channels=channel,
+                          content=text,
+                          initial_comment=initial_comment,
+                          title=title,
+                          thread_ts=thread_ts)
+        logger('info', res)
+        if res['ok'] != "True":
+            logger("warn", "Error: __send_snippet API Error: %s" % res['error'])
 
-def __send_message(sc, text, channel, thread_ts="",  icon_url='ru', emoji='null'):
+    # KeyError is not going through logger, debug it
+    except KeyError as e:
+        logger("ignore", str(e) + " error in __send_snippet.")
+    except Exception as e:
+        logger("warn", "Unknown error in __send_snippet: " + str(e))
+
+
+def __send_message(sc, text, channel, thread_ts="", icon_url='ru', emoji='null'):
     # Required slackclient, channel, thread_ts
     # thread_ts if this is a thread response
     # icon_url to override default, set this to 'emoji' override with an emoji
