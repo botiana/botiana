@@ -4,7 +4,7 @@
 
 from random import randint
 import random
-from slack_commands import __send_response, __reaction
+from slack_commands import __send_message, __reaction
 
 
 def keywords(sc, evt, yamldata, count):
@@ -22,12 +22,12 @@ def keywords(sc, evt, yamldata, count):
                         if yamldata["keywords"][k]["type"] in "phrase":
                             count["random"] = randint(1, 7)
                             count["current"] = 0
-                            __send_response(sc, random.choice(yamldata["keywords"][k]["phrases"]),
+                            __send_message(sc, random.choice(yamldata["keywords"][k]["phrases"]),
                                             evt["channel"], evt["thread_ts"], yamldata["keywords"][k]["icon"])
                         if yamldata["keywords"][k]["type"] == "url":
                             count["random"] = randint(1, 7)
                             count["current"] = 0
-                            __send_response(sc, yamldata["keywords"][k]["url"], evt["channel"],
+                            __send_message(sc, yamldata["keywords"][k]["url"], evt["channel"],
                                             evt["thread_ts"], yamldata["keywords"][k]["icon"])
                         if yamldata["keywords"][k]["type"] == "emoji":
                             count["random"] = randint(1, 7)
