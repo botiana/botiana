@@ -8,13 +8,15 @@ MAINTAINER rpkish
 RUN apk update \
     && apk add --virtual build-dependencies build-base py3-lxml libxml2-dev libxslt-dev
 
+# run configuration steps
+COPY ./requirements.txt /usr/local/botiana/
+RUN pip install -r /usr/local/botiana/requirements.txt
+ 
 # Install botiana and copy modified settings and dictionaries 
-COPY ./botiana.py ./settings.py ./requirements.txt ./common.py ./keywords.py ./legacy_modules.py  \
+COPY ./botiana.py ./settings.py ./common.py ./keywords.py ./legacy_modules.py  \
      ./message_router.py ./settings.py ./slack_commands.py /usr/local/botiana/
 COPY data/data.yaml /usr/local/botiana/data/
 
-# run configuration steps
-RUN pip install -r /usr/local/botiana/requirements.txt
 
 # Fire up botiana
 WORKDIR /usr/local/botiana
