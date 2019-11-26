@@ -9,7 +9,7 @@ Botiana is currently developed and testing using python 3.7
 
 ### Settings
 The settings file has a few defaults you may need to customize. 
- - You may se your token here, or via the environment.
+ - You may set your token here, or via the environment.
  - You can change the bot's name, if you must.
  - Set your desired level of logs
  - Set the max translation length
