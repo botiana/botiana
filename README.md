@@ -14,10 +14,10 @@ Botiana is currently developed and testing using python 3.7
 
 ### Settings
 The settings file has a few defaults you may need to customize. 
- - You may set your token here, or via the environment.
- - You can change the bot's name, if you must.
+ - You may set your token here, or via the environment
+ - If you insist, you can change the bot's name, or set it via the environment
  - Set your desired level of logs
- - Set the max translation length
+ - Set the maximum input length for translations
  - Configure the commands you wish to enable from legacy_modules
  
 Several other items can be configured by setting environment variables:
@@ -26,13 +26,13 @@ Several other items can be configured by setting environment variables:
 
 more are available, consult legacy_modules.py.
 
-Data
+#### Data
 Botiana loads local data from a yaml file: data/data.yaml
 
-Keywords & Reactions
+#### Keywords & Reactions
 Keywords, responses and reactions can occur in specific channels, or all channels. Configure this in the data.yaml file.
 
-Systems Administrator Dictionary
+#### Systems Administrator Dictionary
 Local dictionary entries can be created for lookup. Configure this in the data.yaml file.
 
 ### Build

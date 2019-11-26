@@ -4,7 +4,7 @@ import os
 # slack token
 token = os.environ["token"]
 
-BOT_NAME = 'botiana'
+BOT_NAME = os.getenv('botname', 'botiana')
 
 # Levels: crit, warn, info
 LOG_LEVEL = 'crit'
