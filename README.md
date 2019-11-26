@@ -31,4 +31,11 @@ Systems Administrator Dictionary
 Local dictionary entries can be created for lookup. Configure this in the data.yaml file.
 
 ### Build
-docker build . -t botiana
+`docker build . -t botiana`
+
+### Local testing
+Get your token from the slack api and export it as shown and run with docker.
+```
+export token="xoxb-11111111111-111111111111-aaa1aAAAAAaaaAAaAAAAaa1a"
+docker build . -t botiana;docker run  -e token=$token botiana
+```
