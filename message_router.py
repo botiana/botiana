@@ -4,7 +4,7 @@
 import sys
 from common import logger
 from settings import *
-from slack_commands import __send_response
+from slack_commands import __send_message
 # We use dynamic dispatch do execute modules, next line prevents ugliness in pycharm
 # noinspection PyUnresolvedReferences
 from legacy_modules import eight_ball, wiki, define, memelist, meme, __trans, rtfm
@@ -52,10 +52,10 @@ def message_router(variables, botname, evt, command, message):
                 command, request = command.split(':')
                 __trans(variables, messagedetails, flag="flag-" + request, lang=request)
             elif command.startswith("channel_join"):
-                __send_response(variables.sc, "Just like the Crimea, You can not keep me out. You capitalist pigs!",
+                __send_message(variables.sc, "Just like the Crimea, You can not keep me out. You capitalist pigs!",
                                 evt["channel"], "", icon_default)
             elif command.startswith("group_join"):
-                __send_response(variables.sc, "You are all parasites and loafers that stop others from working!",
+                __send_message(variables.sc, "You are all parasites and loafers that stop others from working!",
                                 evt["channel"], "", icon_default)
             else:
                 logger('info', "I have been tasked with an invalid command.")
