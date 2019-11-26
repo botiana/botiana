@@ -164,7 +164,7 @@ def __trans(variables, msgdict, flag="flag-ru", lang="ru"):
                             custom_icon("icon_translator"))
         # Botiana can get into and endless loop, so let's discard anything that has her name at the beginning
         elif bot_mention in msgdict["message"]:
-            __send_message(variables.sc, "You are a joker, I think you play trick on me, no?",
+            __send_message(variables.sc, "You are joker, I think you play trick on me, no?",
                             msgdict["channel"], msgdict["thread_ts"], "emoji", ":flag-ru:")
         else:
             # Are we translating from one language to another, syntax `tr:en|de`
