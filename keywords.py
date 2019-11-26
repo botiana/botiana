@@ -23,12 +23,12 @@ def keywords(sc, evt, yamldata, count):
                             count["random"] = randint(1, 7)
                             count["current"] = 0
                             __send_message(sc, random.choice(yamldata["keywords"][k]["phrases"]),
-                                            evt["channel"], evt["thread_ts"], yamldata["keywords"][k]["icon"])
+                                           evt["channel"], evt["thread_ts"], yamldata["keywords"][k]["icon"])
                         if yamldata["keywords"][k]["type"] == "url":
                             count["random"] = randint(1, 7)
                             count["current"] = 0
                             __send_message(sc, yamldata["keywords"][k]["url"], evt["channel"],
-                                            evt["thread_ts"], yamldata["keywords"][k]["icon"])
+                                           evt["thread_ts"], yamldata["keywords"][k]["icon"])
                         if yamldata["keywords"][k]["type"] == "emoji":
                             count["random"] = randint(1, 7)
                             count["current"] = 0
