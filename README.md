@@ -1,7 +1,12 @@
 # botiana
+botiana is a bot for slack. She does things. 
+
+## Slack Configuration
+Follow [these directions](https://slack.com/help/articles/115005265703-create-a-bot-for-your-workspace) from slack. Be sure to configure a default icon.
 
 ## Getting started
 Botiana is intended to run in a container. But, make your own choice, this isn't Soviet Russia.
+Commits should be emojified using https://gitmoji.carloscuesta.me/ 
 
 ### Install requirements
 Botiana is currently developed and testing using python 3.7
