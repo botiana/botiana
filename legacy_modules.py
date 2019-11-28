@@ -34,10 +34,9 @@ def eight_ball(variables, msgdict):
 
 def wiki(variables, msgdict):
     try:
-        summary = wikipedia.summary(msgdict["message"])
         page = wikipedia.page(msgdict["message"])
 
-        __send_snippet(variables.sc, summary, msgdict["channel"], msgdict["thread_ts"], page.url, msgdict["message"])
+        __send_message(variables.sc, page.url, msgdict["channel"], msgdict["thread_ts"], custom_icon("icon_wiki"))
     except wikipedia.exceptions.PageError:
         __send_message(variables.sc, msgdict["message"] + " is not a valid article. Try again", msgdict["channel"],
                         msgdict["thread_ts"], custom_icon("icon_wiki"))
