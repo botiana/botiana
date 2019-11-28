@@ -27,9 +27,10 @@ Several other items can be configured by setting environment variables:
 more are available, consult legacy_modules.py.
 
 #### Data
-Botiana loads local data from a yaml file: data/data.yaml
+Botiana loads local data from a yaml file: `data/data.yaml`
 
 If you're running the bot in kubernetes or in docker you can mount your file from a ConfigMap or a volume mount.
+
 `docker run -v "/path/to/my/data.yaml":"/usr/local/botiana/data/data.yaml"  -e token=$token botiana`
 
 #### Keywords & Reactions
@@ -48,6 +49,7 @@ Botiana can support you. You'll need to have a file in the path with the main pr
 1. You must define an array  `local_commands = ['tru', 'lunch']` that defines what commands in local`local_modules.py` are actionable by botiana. 
 
 If you're running the bot in kubernetes or in docker you can mount your file from a ConfigMap or a volume mount.
+
 `docker run -v "/path/to/my/cool_modules.py":"/usr/local/botiana/local_modules.py"  -e token=$token botiana`
 
 ### Build
