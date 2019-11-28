@@ -13,7 +13,7 @@ LOG_LEVEL = 'crit'
 MAX_TRANSLATE_LENGTH = 250
 
 # enabled commands
-cmnds = ['eight_ball', 'define', 'wiki', 'memelist', 'meme', 'rtfm']
+commands = ['eight_ball', 'define', 'wiki', 'memelist', 'meme', 'rtfm']
 
 # bot avatar
 icon_default = ('https://upload.wikimedia.org/wikipedia/' +

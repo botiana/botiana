@@ -9,8 +9,23 @@ from slack_commands import __send_message
 # noinspection PyUnresolvedReferences
 from legacy_modules import eight_ball, wiki, define, memelist, meme, __trans, rtfm
 
+try:
+    from local_modules import *
+except ImportError:
+    logger('warn', 'no local modules to import')
+
+
 
 def message_router(variables, botname, evt, command, message):
+    all_commands = commands
+    
+    try: 
+        if local_commands:
+            all_commands += local_commands
+    except NameError:
+        logger('info', 'no local module commands were defined')
+        pass
+
     if "type" in evt and evt["type"] == "message" and "text" in evt:
         # Channel/Group Invites
         # Slack does something along the lines of "@bot has been added to channel"
@@ -44,7 +59,7 @@ def message_router(variables, botname, evt, command, message):
             logger('crit', "Killed by human")
             sys.exit(0)
         else:
-            if command in cmnds:
+            if command in all_commands:
                 # http://stackoverflow.com/a/16683842/436190
                 # stop the madness
                 globals()[command](variables, messagedetails)
