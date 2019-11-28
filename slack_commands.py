@@ -3,6 +3,7 @@
 from common import logger
 from settings import *
 
+
 def __send_snippet(sc, text, channel, thread_ts="", initial_comment='', title='-'):
     # Required slackclient, channel, thread_ts
     # thread_ts if this is a thread response

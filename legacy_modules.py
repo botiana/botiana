@@ -26,10 +26,10 @@ def eight_ball(variables, msgdict):
                   "My sources say no.",
                   ]
         __send_message(variables.sc, random.choice(answers), msgdict["channel"], msgdict["thread_ts"],
-                        custom_icon("icon_poolball"))
+                       custom_icon("icon_poolball"))
     else:
         __send_message(variables.sc, "this works better when you ask the magic eight ball a question. Just say'n",
-                        msgdict["channel"], msgdict["thread_ts"], custom_icon("icon_poolball"))
+                       msgdict["channel"], msgdict["thread_ts"], custom_icon("icon_poolball"))
 
 
 def wiki(variables, msgdict):
@@ -39,12 +39,12 @@ def wiki(variables, msgdict):
         __send_message(variables.sc, page.url, msgdict["channel"], msgdict["thread_ts"], custom_icon("icon_wiki"))
     except wikipedia.exceptions.PageError:
         __send_message(variables.sc, msgdict["message"] + " is not a valid article. Try again", msgdict["channel"],
-                        msgdict["thread_ts"], custom_icon("icon_wiki"))
+                       msgdict["thread_ts"], custom_icon("icon_wiki"))
     except wikipedia.exceptions.DisambiguationError as e:
         __send_message(variables.sc, str(e), msgdict["channel"], msgdict["thread_ts"], custom_icon("icon_wiki"))
     except wikipedia.exceptions.WikipediaException:
         __send_message(variables.sc, "Wikipedia Error. Maybe you should have donated to them when Jimmy asked the " +
-                        "first time.", msgdict["channel"], msgdict["thread_ts"], custom_icon("icon_wiki"))
+                       "first time.", msgdict["channel"], msgdict["thread_ts"], custom_icon("icon_wiki"))
 
 
 # Defines
@@ -84,10 +84,10 @@ def define(variables, msgdict, alternate_definition_index=0, ud_results_per_page
             resp = '<@{}> Urban Dictionary doesn\'t have `{}` definitions for `{}`...'.format(
                     msgdict["caller"], alternate_definition_index + 1, parsed_message[0].strip())
         __send_message(variables.sc, resp, msgdict["channel"], msgdict["thread_ts"],
-                        custom_icon("icon_urban_dictionary"))
+                       custom_icon("icon_urban_dictionary"))
     else:
         __send_message(variables.sc, "what exactly are you asking me to define?", msgdict["channel"],
-                        msgdict["thread_ts"], custom_icon("icon_urban_dictionary"))
+                       msgdict["thread_ts"], custom_icon("icon_urban_dictionary"))
 
 
 # SA Dictionary
@@ -149,7 +149,7 @@ def meme(variables, msgdict):
         replace("''", '"').
         replace("'", '%27') for s in (template, top_text, bottom_text))
     __send_message(variables.sc, "https://bradme.me/{}/{}/{}.jpg".format(template, top_text, bottom_text),
-                    msgdict["channel"], msgdict["thread_ts"], custom_icon("icon_bcat"))
+                   msgdict["channel"], msgdict["thread_ts"], custom_icon("icon_bcat"))
 
 
 # Universal Translator
@@ -160,11 +160,11 @@ def __trans(variables, msgdict, flag="flag-ru", lang="ru"):
         if len(msgdict["message"]) > MAX_TRANSLATE_LENGTH:
             resp = "Don't be a dick <@{}>".format(msgdict["caller"])
             __send_message(variables.sc, resp, msgdict["channel"], msgdict["thread_ts"],
-                            custom_icon("icon_translator"))
+                           custom_icon("icon_translator"))
         # Botiana can get into and endless loop, so let's discard anything that has her name at the beginning
         elif bot_mention in msgdict["message"]:
             __send_message(variables.sc, "You are joker, I think you play trick on me, no?",
-                            msgdict["channel"], msgdict["thread_ts"], "emoji", ":flag-ru:")
+                           msgdict["channel"], msgdict["thread_ts"], "emoji", ":flag-ru:")
         else:
             # Are we translating from one language to another, syntax `tr:en|de`
             if len(lang) > 2 and lang.find('|') != -1:
@@ -174,7 +174,7 @@ def __trans(variables, msgdict, flag="flag-ru", lang="ru"):
                 # this should fail as we are expecting 2 char language codes
                 if len(from_lang) > 2 or len(to_lang) > 2:
                     __send_message(variables.sc, "Such a sad story you have for me.", msgdict["channel"],
-                                    msgdict["thread_ts"], "emoji", ":flag-ru:")
+                                   msgdict["thread_ts"], "emoji", ":flag-ru:")
                 else:
                     try:
                         translator = Translator(to_lang=to_lang, from_lang=from_lang)
@@ -187,10 +187,10 @@ def __trans(variables, msgdict, flag="flag-ru", lang="ru"):
                     except TypeError:
                         resp = 'hey <@{}>... {} don\'t speak that language.'.format(msgdict["caller"], BOT_NAME)
                         __send_message(variables.sc, resp, msgdict["channel"], msgdict["thread_ts"],
-                                        custom_icon("icon_translator"))
+                                       custom_icon("icon_translator"))
             elif len(lang) > 2:
                 __send_message(variables.sc, "sorry, not sorry", msgdict["channel"], msgdict["thread_ts"],
-                                "emoji", ":flag-ru:")
+                               "emoji", ":flag-ru:")
             else:
                 try:
                     translator = Translator(to_lang=lang)
@@ -198,7 +198,7 @@ def __trans(variables, msgdict, flag="flag-ru", lang="ru"):
                     __send_message(variables.sc, resp, msgdict["channel"], msgdict["thread_ts"], "emoji", flag)
                 except TypeError:
                     __send_message(variables.sc, "Only you could get a robot to refuse a job. Such a pity.",
-                                    msgdict["channel"], msgdict["thread_ts"], custom_icon("icon_translator"))
+                                   msgdict["channel"], msgdict["thread_ts"], custom_icon("icon_translator"))
     except ValueError:
         resp = 'Vhy try to anger {} <@{}>?'.format(BOT_NAME, msgdict["caller"])
         __send_message(variables.sc, resp, msgdict["channel"], msgdict["thread_ts"], ":earth_americas:")
