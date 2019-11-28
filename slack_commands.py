@@ -41,6 +41,7 @@ def __send_message(sc, text, channel, thread_ts="", icon_url='ru', emoji='null')
                               as_user='false',
                               channel=channel,
                               text=text,
+                              unfurl_links='true',
                               thread_ts=thread_ts)
         else:
             res = sc.api_call('chat.postMessage',
@@ -49,7 +50,9 @@ def __send_message(sc, text, channel, thread_ts="", icon_url='ru', emoji='null')
                               as_user='false',
                               channel=channel,
                               text=text,
+                              unfurl_links='true',
                               thread_ts=thread_ts)
+        logger('info', res)
         if res['ok'] != "True":
             logger("warn", "Error: __send_message API Error: %s" % res['error'])
         logger('info', res)
