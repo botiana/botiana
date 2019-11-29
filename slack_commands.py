@@ -8,7 +8,6 @@ def __send_snippet(sc, text, channel, thread_ts="", initial_comment='', title='-
     # Required slackclient, channel, thread_ts
     # thread_ts if this is a thread response
     logger('info', initial_comment)
-    res = None
     try:
         res = sc.api_call('files.upload',
                           channels=channel,
@@ -33,7 +32,6 @@ def __send_message(sc, text, channel, thread_ts="", icon_url='ru', emoji='null')
     # icon_url to override default, set this to 'emoji' override with an emoji
     # emoji set this to a valid emoji and ensure icon_url='emoji'
     try:
-        res = None
         if "emoji" in icon_url:
             res = sc.api_call('chat.postMessage',
                               username=BOT_NAME,
@@ -97,7 +95,6 @@ def __send_ephemeral(sc, text, channel, caller):
 
 def __set_topic(sc, new_topic, channel):
     try:
-        res = None
         if channel.startswith("G"):
             res = sc.api_call('groups.setTopic',
                               channel=channel,

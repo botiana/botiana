@@ -15,7 +15,6 @@ except ImportError:
     logger('warn', 'no local modules to import')
 
 
-
 def message_router(variables, botname, evt, command, message):
     all_commands = commands
     

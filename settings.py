@@ -15,6 +15,9 @@ MAX_TRANSLATE_LENGTH = 250
 # enabled commands
 commands = ['eight_ball', 'define', 'wiki', 'memelist', 'meme', 'rtfm']
 
+# enabled local commands
+local_commands = []
+
 # bot avatar
 icon_default = ('https://upload.wikimedia.org/wikipedia/' +
                 'commons/thumb/7/7e/Hammer_and_sickle.svg/1024px-Hammer_and_sickle.svg.png')
