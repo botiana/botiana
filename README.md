@@ -61,5 +61,3 @@ Get your token from the slack api and export it as shown and run with docker.
 export token="xoxb-11111111111-111111111111-aaa1aAAAAAaaaAAaAAAAaa1a"
 docker build . -t botiana;docker run  -e token=$token botiana
 ```
-
-### Docker Image
