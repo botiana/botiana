@@ -8,12 +8,12 @@ from slack_commands import __send_message
 # We use dynamic dispatch do execute modules, next line prevents ugliness in pycharm
 # noinspection PyUnresolvedReferences
 from legacy_modules import eight_ball, wiki, define, memelist, meme, __trans, rtfm
+from wolfram_alpha import wolf
 
 try:
     from local_modules import *
 except ImportError:
     logger('warn', 'no local modules to import')
-
 
 def message_router(variables, botname, evt, command, message):
     all_commands = commands
@@ -58,9 +58,10 @@ def message_router(variables, botname, evt, command, message):
             logger('crit', "Killed by human")
             sys.exit(0)
         else:
-            if command in all_commands:
+            if command in all_commands: 
                 # http://stackoverflow.com/a/16683842/436190
                 # stop the madness
+                logger('info', "sending standard command")
                 globals()[command](variables, messagedetails)
             elif command.startswith("tr:"):
                 command, request = command.split(':')
@@ -72,4 +73,4 @@ def message_router(variables, botname, evt, command, message):
                 __send_message(variables.sc, "You are all parasites and loafers that stop others from working!",
                                evt["channel"], "", icon_default)
             else:
-                logger('info', "I have been tasked with an invalid command.")
+                wolf(variables, messagedetails)

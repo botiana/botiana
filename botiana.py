@@ -77,16 +77,25 @@ class BotMain(threading.Thread):
                         if message.startswith(bot_mention):
                             try:
                                 # have a botname, command, and message?
+                                logger('info', 'sending botname, command and message to message_router')
                                 _, command, message = message.split(None, 2)
                                 message_router(self.variables, bot_mention, evt, command, message)
                             except ValueError:
+                                logger('info', "value error in command parsing - botname, command and message")
                                 try:
                                     # maybe just a botname and command?
                                     _, command = message.split(None, 1)
                                     message_router(self.variables, bot_mention, evt, command, '')
                                 except ValueError:
                                     # this should never happen....
-                                    print("Value Error")
+                                    logger('info', "value error in command parsing - botname, command")
+                        elif bot_mention in message:
+                            try:
+                                logger('info', "routing message to wolf")
+                                message_router(self.variables, bot_mention, evt, 'wolf', message)
+                            except Exception:
+                                logger('info', "failed to send message to wolf module")
+
                 self.variables.current_time = time.time()
                 time.sleep(.1)
         else:
