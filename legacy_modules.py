@@ -7,10 +7,9 @@ import json
 import re
 from bs4 import BeautifulSoup
 from translate import Translator
-from pyowm import OWM
 from settings import *
 from common import logger, custom_icon
-from slack_commands import __send_message, __send_ephemeral, __impersonator, __user_id, __send_snippet
+from slack_commands import __send_message, __send_ephemeral
 
 
 def eight_ball(variables, msgdict):
