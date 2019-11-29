@@ -27,13 +27,30 @@ Several other items can be configured by setting environment variables:
 more are available, consult legacy_modules.py.
 
 #### Data
-Botiana loads local data from a yaml file: data/data.yaml
+Botiana loads local data from a yaml file: `data/data.yaml`
+
+If you're running the bot in kubernetes or in docker you can mount your file from a ConfigMap or a volume mount.
+
+`docker run -v "/path/to/my/data.yaml":"/usr/local/botiana/data/data.yaml"  -e token=$token botiana`
 
 #### Keywords & Reactions
 Keywords, responses and reactions can occur in specific channels, or all channels. Configure this in the data.yaml file.
 
 #### Systems Administrator Dictionary
 Local dictionary entries can be created for lookup. Configure this in the data.yaml file.
+
+#### Local Modules
+There may arise a time when you want to have custom modules defined for the bot that don't really belong in this repo. Maybe your team commonly translates English to Russian and you're all getting tired of typeing `tr:en|ru`. You could make a local module that defines `tru` as a shortcut. You may want something that calls an internal API to return the lunch selections for the day in the cafeteria. :shrug: You do you. 
+
+Botiana can support you. You'll need to have a file in the path with the main program named `local_modules.py`. 
+
+##### File Requirements
+1. All custom commands must start with a letter, not underscores, as the bot rejects underscore commands.
+1. You must define an array  `local_commands = ['tru', 'lunch']` that defines what commands in local`local_modules.py` are actionable by botiana. 
+
+If you're running the bot in kubernetes or in docker you can mount your file from a ConfigMap or a volume mount.
+
+`docker run -v "/path/to/my/cool_modules.py":"/usr/local/botiana/local_modules.py"  -e token=$token botiana`
 
 ### Build
 `docker build . -t botiana`

@@ -13,7 +13,10 @@ LOG_LEVEL = os.getenv('log_level', 'crit')
 MAX_TRANSLATE_LENGTH = 250
 
 # enabled commands
-cmnds = ['eight_ball', 'define', 'wiki', 'memelist', 'meme', 'rtfm']
+commands = ['eight_ball', 'define', 'wiki', 'memelist', 'meme', 'rtfm']
+
+# enabled local commands
+local_commands = []
 
 # bot avatar
 icon_default = ('https://upload.wikimedia.org/wikipedia/' +
