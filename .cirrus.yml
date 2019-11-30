@@ -1,4 +1,6 @@
 test_task:
+  container:
+    dockerfile: Dockerfile
   pip_cache:
     folder: ~/.cache/pip
     fingerprint_script: echo $PYTHON_VERSION && cat requirements.txt
