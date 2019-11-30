@@ -1,13 +1,9 @@
 container:
-  image: botiana:latest
+  image: python:3.7.4-alpine3.10
 
-build_deploy_script:
-  environment:
-    dockerhub_login: ENCRYPTED[d149d37090ee6cbc8d0a4256f8ef817723358d481862867c49b240a9d3b86192abb0aafe59d750794153389b0bcc5ac2]
-    dockerhub_password: ENCRYPTED[c307b26c6429d650b91becbc08e9c2e88bff51d8d614db900e595812adb722dd7c449902f90a622a4c09ebe35d487bf0]
-    login_script:
-      - docker login --username $dockerhub_login --password $dockerhub_password
-    build_script:
-      - docker build -t rpkish/botiana:latest
-    push_script:
-      - docker push rpkish/botiana:latest
+test_task:
+  pip_cache:
+    folder: ~/.cache/pip
+    fingerprint_script: cd /usr/local/botiana; echo $PYTHON_VERSION && cat requirements.txt
+    populate_script: cd /usr/local/botiana;    pip install -r requirements.txt
+  test_script: cd /usr/local/botiana;          pylint *.py
