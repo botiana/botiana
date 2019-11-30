@@ -62,4 +62,4 @@ export token="xoxb-11111111111-111111111111-aaa1aAAAAAaaaAAaAAAAaa1a"
 docker build . -t botiana;docker run  -e token=$token botiana
 ```
 
-
+adsf
