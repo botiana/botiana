@@ -99,7 +99,6 @@ def __sa_dictionary(message, yamldata):
                 blob = blob + "*pronunciation:* _/" + yamldata["words"][message]["pronunciation"] + "/_\n"
         except KeyError:
             logger("warn", "missing pronunciation in dictionary entry for: " + message)
-            pass
 
     for lookup in ('definition', 'usage', 'symptoms', 'synonyms'):
         try:
