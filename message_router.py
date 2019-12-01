@@ -54,6 +54,8 @@ def message_router(variables, botname, evt, command, message):
         elif command == "set":
             logger('warn', "set command sent")
         elif command == "tot":
+            __send_message(variables.sc, "Oh no! A Grue!", evt["channel"], "", icon_default)
+            __send_message(variables.sc, "_" + BOT_NAME + " dies_ :skull_and_crossbones:", evt["channel"], "", icon_default)
             logger('crit', "Killed by human")
             sys.exit(0)
         else:
