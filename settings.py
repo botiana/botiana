@@ -22,9 +22,8 @@ local_commands = []
 icon_default = ('https://upload.wikimedia.org/wikipedia/' +
                 'commons/thumb/7/7e/Hammer_and_sickle.svg/1024px-Hammer_and_sickle.svg.png')
 
-# Wolfram Alpha API token (optional)
-wa_token = os.getenv('wa_token', '')
-
 # Fancy message processing
 enable_message_processing = False
-message_processing_module = 'wolfram'
+#message_processing_module = 'wolfram'
+#wa_token = os.getenv('wa_token', '')
+
