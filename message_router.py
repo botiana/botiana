@@ -23,7 +23,6 @@ def message_router(variables, botname, evt, command, message):
             all_commands += local_commands
     except NameError:
         logger('info', 'no local module commands were defined')
-        pass
 
     if "type" in evt and evt["type"] == "message" and "text" in evt:
         # Channel/Group Invites
