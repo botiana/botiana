@@ -7,7 +7,7 @@ token = os.environ["token"]
 BOT_NAME = os.getenv('botname', 'botiana')
 
 # Levels: crit, warn, info
-LOG_LEVEL = os.getenv('log_level', 'info')
+LOG_LEVEL = os.getenv('log_level', 'crit')
 
 # max string length for translation
 MAX_TRANSLATE_LENGTH = 250
