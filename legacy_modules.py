@@ -203,15 +203,15 @@ def __trans(variables, msgdict, flag="flag-ru", lang="ru"):
 
 
 def rtfm(variables, msgdict):
-    resp = "commands <@botiana> will respond to:\n\n" + \
+    resp = "commands *@" + BOT_NAME +"* will respond to:\n\n" + \
            " define <string>\n" + \
-           "    ask botiana to look up something in the urban dictionary, or the old SA dictionary\n\n" + \
+           "    ask *" + BOT_NAME + "* to look up something in the urban dictionary, or the old SA dictionary\n\n" + \
            " tr:<from_lang>|<to_lang> <string> \n" + \
-           "    ask botiana to translate something\n\n" + \
+           "    ask *" + BOT_NAME + "* to translate something\n\n" + \
            " eight_ball <string>  \n" + \
            "    ask the magic 8 ball a question\n\n" + \
            " wiki <string>\n" + \
-           "    ask botiana to return a summary from wikipedia\n\n" + \
+           "    ask *" + BOT_NAME + "* to return a summary from wikipedia\n\n" + \
            " memelist \n    giant wall of text listing meme commands\n\n" + \
            " meme <meme command> <top string> | <bottom string>\n" + \
            "    the finest memes in all the land, powered by bradme.me\n\n"
