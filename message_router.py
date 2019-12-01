@@ -60,7 +60,6 @@ def message_router(variables, botname, evt, command, message):
             if command in all_commands: 
                 # http://stackoverflow.com/a/16683842/436190
                 # stop the madness
-                logger('info', "sending standard command")
                 globals()[command](variables, messagedetails)
             elif command.startswith("tr:"):
                 command, request = command.split(':')
