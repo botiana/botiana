@@ -86,7 +86,17 @@ class BotMain(threading.Thread):
                                     message_router(self.variables, bot_mention, evt, command, '')
                                 except ValueError:
                                     # this should never happen....
-                                    print("Value Error")
+                                    logger('info', "value error in command parsing - this should \
+                                                   never happen")
+                        elif bot_mention in message:
+                            if enable_message_processing is True:
+                                try:
+                                    logger('info', "routing message to message_processing")
+                                    message_router(self.variables, bot_mention, evt,
+                                                   message_processing_module, message)
+                                except ValueError:
+                                    logger('info', "failed to send message to message_processing module")
+
                 self.variables.current_time = time.time()
                 time.sleep(.1)
         else:

@@ -21,3 +21,8 @@ local_commands = []
 # bot avatar
 icon_default = ('https://upload.wikimedia.org/wikipedia/' +
                 'commons/thumb/7/7e/Hammer_and_sickle.svg/1024px-Hammer_and_sickle.svg.png')
+
+# Fancy message processing
+enable_message_processing = os.getenv('enable_message_processing', 'False')
+message_processing_module = os.getenv('message_processing_module', 'wolfram')
+wa_token = os.getenv('wa_token', '')

@@ -57,7 +57,7 @@ def message_router(variables, botname, evt, command, message):
             logger('crit', "Killed by human")
             sys.exit(0)
         else:
-            if command in all_commands:
+            if command in all_commands: 
                 # http://stackoverflow.com/a/16683842/436190
                 # stop the madness
                 globals()[command](variables, messagedetails)
@@ -71,4 +71,8 @@ def message_router(variables, botname, evt, command, message):
                 __send_message(variables.sc, "You are all parasites and loafers that stop others from working!",
                                evt["channel"], "", icon_default)
             else:
-                logger('info', "I have been tasked with an invalid command.")
+                try:
+                    if enable_message_processing is True:
+                        globals()[message_processing_module](variables, messagedetails)
+                except NameError:
+                    logger('info', 'message_processing is not enabled')

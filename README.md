@@ -44,6 +44,17 @@ There may arise a time when you want to have custom modules defined for the bot 
 
 Botiana can support you. You'll need to have a file in the path with the main program named `local_modules.py`. 
 
+#### Fancy Message Processing
+If you would like to route spurios statements including the bot name to a service like Wolfram Alpha or Cleverbot, add the following config to your settings.py (following assumes wolfram alpha). Note, the message_processing_module must match the name of the local module you create for this feature. 
+
+`enable_message_processing = True`
+`message_processing_module = 'wolfram'`
+
+You will likely also want to add settings for your custom local module that will handle the command parsing / api call to the service
+
+`# Wolfram Alpha API token`
+`wa_token = os.getenv('wa_token', '')`
+
 ##### File Requirements
 1. All custom commands must start with a letter, not underscores, as the bot rejects underscore commands.
 1. You must define an array  `local_commands = ['tru', 'lunch']` that defines what commands in local`local_modules.py` are actionable by botiana. 
