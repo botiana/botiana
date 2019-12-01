@@ -26,4 +26,3 @@ icon_default = ('https://upload.wikimedia.org/wikipedia/' +
 enable_message_processing = False
 #message_processing_module = 'wolfram'
 #wa_token = os.getenv('wa_token', '')
-
