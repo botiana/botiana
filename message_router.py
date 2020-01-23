@@ -7,7 +7,7 @@ from settings import *
 from slack_commands import __send_message
 # We use dynamic dispatch do execute modules, next line prevents ugliness in pycharm
 # noinspection PyUnresolvedReferences
-from legacy_modules import eight_ball, wiki, define, memelist, meme, __trans, rtfm
+from legacy_modules import eight_ball, wiki, define, memelist, meme, rtfm
 
 try:
     from local_modules import *
@@ -47,8 +47,7 @@ def message_router(variables, botname, evt, command, message):
             'caller':  evt["user"]
         }
 
-        # Command Parsing logic. This is mostly for the older modules, translate and incident_management
-        # Get their own methods, because I'm lazy.
+        # Command Parsing logic. This is mostly for the older modules.
         if command.startswith('__'):
             logger('warn', "ERROR: command starts with __")
         elif command == "set":
@@ -63,9 +62,6 @@ def message_router(variables, botname, evt, command, message):
                 # http://stackoverflow.com/a/16683842/436190
                 # stop the madness
                 globals()[command](variables, messagedetails)
-            elif command.startswith("tr:"):
-                command, request = command.split(':')
-                __trans(variables, messagedetails, flag="flag-" + request, lang=request)
             elif command.startswith("channel_join"):
                 __send_message(variables.sc, "Just like the Crimea! You can not keep me out, you capitalist pigs!",
                                evt["channel"], "", icon_default)

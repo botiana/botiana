@@ -6,7 +6,6 @@ import wikipedia
 import json
 import re
 from bs4 import BeautifulSoup
-from translate import Translator
 from settings import *
 from common import logger, custom_icon
 from slack_commands import __send_message, __send_ephemeral
@@ -149,65 +148,10 @@ def meme(variables, msgdict):
     __send_message(variables.sc, "https://bradme.me/{}/{}/{}.jpg".format(template, top_text, bottom_text),
                    msgdict["channel"], msgdict["thread_ts"], custom_icon("icon_bcat"))
 
-
-# Universal Translator
-def __trans(variables, msgdict, flag="flag-ru", lang="ru"):
-    bot_mention = "<@{}".format(variables.sc.server.login_data["self"]["id"])
-    try:
-        # Fail if too much data is sent at the translator
-        if len(msgdict["message"]) > MAX_TRANSLATE_LENGTH:
-            resp = "Don't be a dick <@{}>".format(msgdict["caller"])
-            __send_message(variables.sc, resp, msgdict["channel"], msgdict["thread_ts"],
-                           custom_icon("icon_translator"))
-        # Botiana can get into and endless loop, so let's discard anything that has her name at the beginning
-        elif bot_mention in msgdict["message"]:
-            __send_message(variables.sc, "You are joker, I think you play trick on me, no?",
-                           msgdict["channel"], msgdict["thread_ts"], "emoji", ":flag-ru:")
-        else:
-            # Are we translating from one language to another, syntax `tr:en|de`
-            if len(lang) > 2 and lang.find('|') != -1:
-                # try from_lang,to_lang = lang.split("|")
-                from_lang = lang.split("|")[0]
-                to_lang = lang.split("|")[1]
-                # this should fail as we are expecting 2 char language codes
-                if len(from_lang) > 2 or len(to_lang) > 2:
-                    __send_message(variables.sc, "Such a sad story you have for me.", msgdict["channel"],
-                                   msgdict["thread_ts"], "emoji", ":flag-ru:")
-                else:
-                    try:
-                        translator = Translator(to_lang=to_lang, from_lang=from_lang)
-                        if from_lang == "en":
-                            flag = ":flag-us:"
-                        else:
-                            flag = ":flag-" + from_lang + ":"
-                        resp = translator.translate(msgdict["message"])
-                        __send_message(variables.sc, resp, msgdict["channel"], msgdict["thread_ts"], "emoji", flag)
-                    except TypeError:
-                        resp = 'hey <@{}>... {} don\'t speak that language.'.format(msgdict["caller"], BOT_NAME)
-                        __send_message(variables.sc, resp, msgdict["channel"], msgdict["thread_ts"],
-                                       custom_icon("icon_translator"))
-            elif len(lang) > 2:
-                __send_message(variables.sc, "sorry, not sorry", msgdict["channel"], msgdict["thread_ts"],
-                               "emoji", ":flag-ru:")
-            else:
-                try:
-                    translator = Translator(to_lang=lang)
-                    resp = translator.translate(msgdict["message"])
-                    __send_message(variables.sc, resp, msgdict["channel"], msgdict["thread_ts"], "emoji", flag)
-                except TypeError:
-                    __send_message(variables.sc, "Only you could get a robot to refuse a job. Such a pity.",
-                                   msgdict["channel"], msgdict["thread_ts"], custom_icon("icon_translator"))
-    except ValueError:
-        resp = 'Vhy try to anger {} <@{}>?'.format(BOT_NAME, msgdict["caller"])
-        __send_message(variables.sc, resp, msgdict["channel"], msgdict["thread_ts"], ":earth_americas:")
-
-
 def rtfm(variables, msgdict):
     resp = "commands *@" + BOT_NAME +"* will respond to:\n\n" + \
            " define <string>\n" + \
            "    ask *" + BOT_NAME + "* to look up something in the urban dictionary, or the old SA dictionary\n\n" + \
-           " tr:<from_lang>|<to_lang> <string> \n" + \
-           "    ask *" + BOT_NAME + "* to translate something\n\n" + \
            " eight_ball <string>  \n" + \
            "    ask the magic 8 ball a question\n\n" + \
            " wiki <string>\n" + \
