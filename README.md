@@ -17,7 +17,6 @@ The settings file has a few defaults you may need to customize.
  - You may set your token here, or via the environment
  - If you insist, you can change the bot's name, or set it via the environment
  - Set your desired level of logs
- - Set the maximum input length for translations
  - Configure the commands you wish to enable from legacy_modules
  
 Several other items can be configured by setting environment variables:
@@ -38,11 +37,6 @@ Keywords, responses and reactions can occur in specific channels, or all channel
 
 #### Systems Administrator Dictionary
 Local dictionary entries can be created for lookup. Configure this in the data.yaml file.
-
-#### Local Modules
-There may arise a time when you want to have custom modules defined for the bot that don't really belong in this repo. Maybe your team commonly translates English to Russian and you're all getting tired of typeing `tr:en|ru`. You could make a local module that defines `tru` as a shortcut. You may want something that calls an internal API to return the lunch selections for the day in the cafeteria. :shrug: You do you. 
-
-Botiana can support you. You'll need to have a file in the path with the main program named `local_modules.py`. 
 
 #### Fancy Message Processing
 If you would like to route spurios statements including the bot name to a service like Wolfram Alpha or Cleverbot, add the following config to your settings.py (following assumes wolfram alpha). Note, the message_processing_module must match the name of the local module you create for this feature. 

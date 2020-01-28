@@ -1,6 +1,4 @@
 #!/usr/local/bin/python3
-# tested on debian 8.5, you need python-pip to install the following modules:
-# pyyaml, bs4, slackclient, translate
 
 from random import randint
 import random
