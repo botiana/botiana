@@ -1,12 +1,12 @@
 #################################
 # Botiana Dockerfile for Alpine #
 #################################
-FROM python:3.7.4-alpine3.10
+FROM arm64v8/alpine
 MAINTAINER rpkish
 
 # Build deps
 RUN apk update \
-    && apk add --virtual build-dependencies build-base py3-lxml libxml2-dev libxslt-dev
+    && apk add --virtual build-dependencies build-base py3-lxml libxml2-dev libxslt-dev python3 py3-pip python3-dev
 
 # run configuration steps
 COPY ./requirements.txt /usr/local/botiana/
@@ -20,4 +20,4 @@ COPY data/data.yaml /usr/local/botiana/data/
 
 # Fire up botiana
 WORKDIR /usr/local/botiana
-CMD /usr/local/bin/python3 -u ./botiana.py
+CMD /usr/bin/python3 -u ./botiana.py
