@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+#!/usr/bin/python3
 # Python 3, dev on debian 9, intending to run in alpine / python official image
 
 import threading
