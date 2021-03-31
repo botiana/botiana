@@ -7,4 +7,4 @@ wikipedia==1.4.0
 pyowm==2.10.0
 wolframalpha==3.0.1
 pylint==2.4.4
-lxml==4.6.2
+lxml==4.6.3
